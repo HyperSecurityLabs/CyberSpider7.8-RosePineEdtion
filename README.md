@@ -1,8 +1,7 @@
 # CyberSpider7.8-RosePineEdtion
+
 A multi-threaded web reconnaissance spider, Written in Rust From HyperSecurityOffensiveLabs .
  🕷️ CyberSpider v7.8.0pro — RoséPine Evergreen Edition
-
-> **Version 7.0 → 7.8.0pro — The "Stop Playing, Start Dominating" Release**
 
 <br>
 
@@ -18,6 +17,8 @@ A multi-threaded web reconnaissance spider, Written in Rust From HyperSecurityOf
 </div>
 
 <br>
+> **Version 7.0 → 7.8.0pro — The "Stop Playing, Start Dominating" Release**
+
 
 ## ⚙️ Serious Implementation Documentation
 
