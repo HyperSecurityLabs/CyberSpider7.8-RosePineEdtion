@@ -184,7 +184,7 @@ Probes 20+ common upload paths per domain. When found, sends corrupted media fil
 | 🐙 GitHub | [github.com/hypersecurityLabs](https://github.com/hypersecurityLabs) |
 | 📱 Telegram | [@hypersecurity_offsec](https://t.me/hypersecurity_offsec) |
 | 📢 Channel | [HyperSecurity Offsec](https://t.me/hypersecurity_offsec) |
-| 🌐 Website | [hypersecurityoffensivelabs] https://hypersecurityoffensivelabs.great-site.net |
+| 🌐 Website | (https://hypersecurityoffensivelabs.great-site.net) |
 
 </div>
 
