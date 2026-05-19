@@ -6,6 +6,227 @@ A multi-threaded web reconnaissance spider, Written in Rust From HyperSecurityOf
 
 <br>
 
+## ⚙️ Serious Implementation Documentation
+
+Now that we've had our fun — here's the actual documentation you'd show your CISO.
+
+---
+
+### 🚀 Installation
+
+```bash
+# Prerequisites: Rust 1.70+, a target, and a dream
+git clone https://github.com/HyperSecurityLabs/CyberSpider7.0release
+cd CyberSpider7.0release
+cargo build --jobs 2 --release
+```
+
+> **Pro tip:** `--jobs 2` because we respect your CPU. Also we're always running at *exactly* 2 threads for that sweet sweet balance.
+
+---
+
+### 📖 Usage
+
+```bash
+# Minimal — hit it and quit it
+./target/release/cyberspider --site https://example.com
+
+# Full OSINT mode — leave no URL unturned
+./target/release/cyberspider \
+  --site https://target.com \
+  --depth 3 \
+  --verbose \
+  --other-sources \
+  --media-check \
+  --deep-scan \
+  --show-modules
+```
+
+#### CLI Reference
+
+| Flag | Description | Default |
+|------|-------------|---------|
+| `-s, --site <URL>` | Target URL | required |
+| `-j, --threads <N>` | Thread count | `2` |
+| `-d, --depth <N>` | Crawl depth (1-10) | `1` |
+| `-C, --concurrent <N>` | Concurrent requests/domain | `5` |
+| `-v, --verbose` | Verbose output with live URLs | `false` |
+| `--deep-scan` | Extended analysis mode | `false` |
+| `--media-check` | Detect + attack media corruption | `false` |
+| `--show-modules` | Display active module tags | `false` |
+| `--no-banner` | Suppress startup banner | `false` |
+| `--other-sources` | Wayback/CommonCrawl/VirusTotal | `false` |
+| `--json` | Structured JSON output | `false` |
+| `--visualize` | Generate `.dot` graph | `false` |
+| `--proxy <URL>` | Route via proxy | none |
+
+---
+
+### 🎨 The RoséPine Experience
+
+Every terminal output is rendered in the **RoséPine color palette**:
+
+```
+🌹 Rose    #eb6f92 — Attack tags, media corruption alerts
+🌲 Pine    #31748f — ASCII banner art lines
+🌊 Foam    #9ccfd8 — Module status, success messages
+🔮 Iris    #c4a7e7 — External source tags (Wayback, VirusTotal)
+🌟 Gold    #f6c177 — Subdomain discoveries, warnings
+💚 Green   #50fa7b — All URLs, targets, discovered links
+```
+
+The braille spinner ticks at 160ms intervals with async yield for zero CPU waste.
+
+---
+
+### 🛡️ Media Corruption Module
+
+**Dual-mode architecture:**
+
+#### 1. Detection (`--media-check`)
+Scans every discovered media URL (jpg, png, gif, mp4, pdf, etc.) for:
+- Invalid/truncated magic bytes
+- MIME type mismatch between header and content
+- Zero-length or unreachable files
+- Executable code embedded in media headers
+- Missing required chunks (IHDR in PNG, ftyp in MP4, etc.)
+
+#### 2. Active Attack (`--media-check` + `--deep-scan`)
+Attempts REAL remote media corruption through:
+- **PUT overwrite** with progressive auth strategies (Bearer, Basic, API keys, X-Auth-Token)
+- **Path traversal upload** (`../../../target.jpg` via multipart forms)
+- **ImageTragick MSL** (CVE-2016-3714) — SVG delegate attack against ImageMagick processors
+- **SVG XXE injection** — XML External Entity attacks on SVG parsers
+- **Endpoint discovery** — probes 50+ common upload paths on the origin domain
+- **Corruption verification** — re-fetches and SHA-256 hashes the media to confirm change
+
+> ⚠️ Only use against targets you own or have explicit written authorization to test.
+
+---
+
+### 🌐 Integration Sources
+
+| Source | What It Gives You | How to Enable |
+|--------|------------------|---------------|
+| [Wayback Machine](https://web.archive.org) | Historical URLs, old endpoints | `--other-sources` |
+| [Common Crawl](https://commoncrawl.org) | Massive URL datasets | `--other-sources` |
+| [VirusTotal](https://virustotal.com) | Malware/reputation data | `--other-sources` (+ API key) |
+
+---
+
+### 🏗 Architecture
+
+```
+┌──────────────────────────────────────────────┐
+│                  main.rs                     │
+│  ┌───────────┐  ┌──────────────────────────┐ │
+│  │   Banner   │  │   BrailleSpinner(async  │ │
+│  │ RoséPine   │  │   160ms tick + yield    │ │
+│  └───────────┘  └──────────────────────────┘ │
+├────────────────────────────────────────── ───┤
+│              Spider (spider/mod.rs)          │
+│  ┌──────────────────────────────────────────┐│
+│  │         Crawler (spider/crawler.rs)     ││
+│  │  ┌────────┐ ┌──────────┐ ┌────────────┐ ││
+│  │  │HTTP    │ │URL       │ │External    │ ││
+│  │  │Client  │ │Extractor │ │Sources     │ ││
+│  │  └────────┘ └──────────┘ └────────────┘ ││
+│  │  ┌────────────────┐ ┌────────────────── ││
+│  │  │Media Corruption│ │Media Corruption   ││
+│  │  │Detector        │ │Attacker          │││
+│  │  └────────────────┘ └──────────────────┘││
+│  └─────────────────────────────────────────┘│
+├─────────────────────────────────────────────┤
+│          Optional Components                │
+│  ┌──────────┐ ┌──────────┐ ┌──────────────┐ │
+│  │Proxy     │ │Database  │ │Plugin Mgr    │ │
+│  │Pool      │ │SQLite/   │ │Libloading    │ │
+│  │          │ │Redis     │ │Extension     │ │
+│  └──────────┘ └──────────┘ └──────────────┘ │
+│  ┌──────────┐ ┌──────────┐ ┌──────────────┐ │
+│  │Distrib.  │ │Visual.   │ │Webhooks      │ │
+│  │Coord./   │ │DOT Graph │ │Discord/Slack │ │
+│  │Worker    │ │Export    │ │              │ │
+│  └──────────┘ └──────────┘ └──────────────┘ │
+└──────────────────────────────────────────────┘
+```
+
+---
+
+### 📦 Configuration (`cyberspider.toml`)
+
+```toml
+[spider]
+site = "https://target.com"
+depth = 3
+concurrent = 10
+threads = 2
+verbose = true
+progress_theme = "rosepine"
+deep_scan = false
+media_check = true
+show_modules = true
+other_sources_enabled = true
+
+[proxy]
+enabled = false
+
+[database]
+enabled = false
+
+[webhooks]
+enabled = false
+```
+
+---
+
+### 📊 Plugin Development
+
+```rust
+use cyberspider::plugins::{Plugin, PluginResult, PluginContext};
+
+pub struct CustomDetector;
+
+#[async_trait::async_trait]
+impl Plugin for CustomDetector {
+    fn plugin_info(&self) -> PluginInfo {
+        PluginInfo {
+            name: "custom_detector".into(),
+            version: "1.0.0".into(),
+            description: "Your custom detector".into(),
+            //do yourslf
+            author: "You".into(),
+            plugin_type: PluginType::Detector,
+            dependencies: vec![],
+            permissions: vec!["read_content".into()],
+        }
+    }
+
+    async fn execute(&mut self, context: &PluginContext) -> Result<PluginResult> {
+        Ok(PluginResult {
+            success: true,
+            data: Some(serde_json::json!({"custom": "result"})),
+            error: None,
+            metadata: std::collections::HashMap::new(),
+        })
+    }
+}
+```
+
+---
+
+### 🔧 Building From Source
+
+```bash
+# Development (fast iteration)
+cargo build --jobs 2
+cargo check --jobs 2    # 0 warnings guaranteed
+
+# Production
+cargo build --jobs 2 --release
+strip target/release/cyberspider   # smaller binary
+```
+
 <div align="center">
 
 ![Version](https://img.shields.io/badge/version-7.8.0pro-eb6f92?style=for-the-badge&labelColor=191724)
