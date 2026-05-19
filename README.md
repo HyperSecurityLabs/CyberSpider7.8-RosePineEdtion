@@ -105,7 +105,7 @@ Scans every discovered media URL (jpg, png, gif, mp4, pdf, etc.) for:
 - Executable code embedded in media headers
 - Missing required chunks (IHDR in PNG, ftyp in MP4, etc.)
 
-#### 2. Active Attack (`--media-check` + `--deep-scan`)
+#### 2. Active Attack (`--media-check` or another tag is given + `--deep-scan`)
 Attempts REAL remote media corruption through:
 - **PUT overwrite** with progressive auth strategies (Bearer, Basic, API keys, X-Auth-Token)
 - **Path traversal upload** (`../../../target.jpg` via multipart forms)
