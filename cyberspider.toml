@@ -1,0 +1,136 @@
+# CyberSpider Configuration File
+# Customize all settings according to your needs
+# See README.md for detailed explanations of each option
+
+[spider]
+# Target website to crawl (single site)
+# site = "https://example.com"
+
+# File containing list of sites to crawl (one per line)
+# sites_file = "sites.txt"
+
+# Output directory for results
+output_dir = "results"
+
+# Crawling configuration
+depth = 1                    # Maximum crawl depth (default: 1)
+concurrent = 5              # Number of concurrent threads (default: 5)
+threads = 4                  # Thread pool size (default: 4)
+delay = 0                    # Delay between requests in seconds (default: 0)
+timeout = 10                 # Request timeout in seconds (default: 10)
+
+# Output formats
+json_output = false          # Enable JSON output (default: false)
+verbose = true              # Enable verbose logging (default: false)
+progress_theme = "cyberwave" # Progress theme: cyberwave|matrix|neon|terminal
+
+# External data sources integration
+other_sources_enabled = true  # Enable Wayback Machine, Common Crawl, etc.
+
+# Browser integration for JavaScript-heavy sites
+[browser]
+enabled = false             # Enable headless browser (default: false)
+headless = true             # Run browser in headless mode
+timeout = 30               # Browser timeout in seconds
+user_agent = "CyberSpider/7.8.0pro" # Custom user agent
+
+# Security scanning features
+[security]
+enabled = false             # Enable security scanning (default: false)
+api_detection = true       # Detect REST/GraphQL APIs
+vulnerability_scan = true  # Basic vulnerability scanning
+technology_fingerprinting = true # Detect frameworks and technologies
+
+# Database storage configuration
+[database]
+enabled = false             # Enable database storage (default: false)
+sqlite_path = "cyberspider.db" # SQLite database file path
+redis_url = "redis://localhost:6379" # Redis server URL
+pool_size = 10              # Database connection pool size
+connection_timeout = 30     # Connection timeout in seconds
+cleanup_days = 30           # Auto-cleanup old data after N days
+
+# Monitoring and metrics
+[monitoring]
+enabled = true              # Enable monitoring (default: true)
+metrics_collection = true   # Collect performance metrics
+log_level = "info"          # Log level: trace|debug|info|warn|error
+file_logging = true         # Enable file logging
+console_output = true       # Enable console output
+
+# Webhook notifications
+[webhooks]
+enabled = false             # Enable webhook notifications (default: false)
+discord_webhook = "https://discord.com/api/webhooks/YOUR_WEBHOOK_URL"
+slack_webhook = "https://hooks.slack.com/services/YOUR/SLACK/WEBHOOK"
+custom_webhook = "https://your-api.example.com/webhook"
+
+# Plugin system configuration
+[plugins]
+enabled = true              # Enable plugin system (default: true)
+auto_load = true            # Auto-load plugins from plugins directory
+plugin_directory = "plugins" # Directory containing plugin files
+
+# Distributed crawling configuration
+[distributed]
+enabled = false             # Enable distributed mode (default: false)
+node_type = "coordinator"   # Node type: coordinator|worker
+coordinator_url = "http://localhost:8080" # Coordinator URL for workers
+node_id = "cyberspider-node-1" # Unique node identifier
+heartbeat_interval = 30    # Heartbeat interval in seconds
+
+# Proxy configuration
+[proxy]
+enabled = false             # Enable proxy rotation (default: false)
+rotation_strategy = "round_robin" # Strategy: round_robin|random|least_used|fastest|weighted
+include_domains = []       # Only proxy these domains (empty = all)
+exclude_domains = []       # Exclude these domains from proxy
+timeout_seconds = 10       # Proxy timeout in seconds
+
+# Visualization settings
+[visualization]
+enabled = true              # Enable visualization generation (default: true)
+formats = ["dot", "json"]  # Output formats: dot|json|mermaid|csv|html
+layout_algorithm = "force"  # Graph layout: force|circular|hierarchical|random
+node_colors = "status"      # Node coloring: status|domain|type
+
+# Rate limiting and politeness
+[rate_limiting]
+enabled = false             # Enable rate limiting (default: false)
+requests_per_second = 10    # Max requests per second
+burst_size = 20             # Burst size for rate limiting
+respect_robots_txt = true  # Respect robots.txt file
+crawl_delay = 1             # Delay between requests to same domain
+
+# Content filtering
+[filtering]
+enabled = false             # Enable content filtering (default: false)
+max_content_size = 10485760  # Max content size in bytes (10MB)
+allowed_extensions = []     # Only crawl these file extensions (empty = all)
+blocked_extensions = [".exe", ".zip", ".tar.gz"] # Block these extensions
+url_patterns = []           # Regex patterns to match URLs (empty = all)
+
+# Advanced crawling options
+[advanced]
+user_agents_file = "user-agents.txt" # File containing user agents to rotate
+cookies_file = "cookies.txt"         # File containing cookies
+headers_file = "headers.txt"         # Custom HTTP headers
+follow_redirects = true             # Follow HTTP redirects
+max_redirects = 5                    # Max redirects to follow
+verify_ssl = true                    # Verify SSL certificates
+
+# Export and reporting
+[export]
+csv_delimiter = ","         # CSV delimiter character
+include_response_headers = false # Include HTTP headers in exports
+include_response_body = false     # Include response body in exports
+timestamp_format = "%Y-%m-%d %H:%M:%S" # Timestamp format
+
+# Logging configuration
+[logging]
+file_path = "cyberspider.log" # Log file path
+max_file_size = 10485760      # Max log file size in bytes (10MB)
+max_files = 5                 # Number of log files to keep
+compress_logs = true         # Compress old log files
+log_requests = false         # Log every HTTP request
+log_responses = false        # Log HTTP response bodies
