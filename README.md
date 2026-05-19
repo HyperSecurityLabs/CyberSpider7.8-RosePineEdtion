@@ -6,6 +6,19 @@ A multi-threaded web reconnaissance spider, Written in Rust From HyperSecurityOf
 
 <br>
 
+<div align="center">
+
+![Version](https://img.shields.io/badge/version-7.8.0pro-eb6f92?style=for-the-badge&labelColor=191724)
+![Rust](https://img.shields.io/badge/rust-1.70%2B-31748f?style=for-the-badge&logo=rust&logoColor=white&labelColor=191724)
+![License](https://img.shields.io/badge/license-MIT-9ccfd8?style=for-the-badge&labelColor=191724)
+![Status](https://img.shields.io/badge/status-offensive%20security-c4a7e7?style=for-the-badge&labelColor=191724)
+![Warnings](https://img.shields.io/badge/warnings-0-50fa7b?style=for-the-badge&labelColor=191724)
+![Build](https://img.shields.io/badge/build-passing-f6c177?style=for-the-badge&labelColor=191724)
+
+</div>
+
+<br>
+
 ## ⚙️ Serious Implementation Documentation
 
 Now that we've had our fun — here's the actual documentation you'd show your CISO.
@@ -227,18 +240,6 @@ cargo build --jobs 2 --release
 strip target/release/cyberspider   # smaller binary
 ```
 
-<div align="center">
-
-![Version](https://img.shields.io/badge/version-7.8.0pro-eb6f92?style=for-the-badge&labelColor=191724)
-![Rust](https://img.shields.io/badge/rust-1.70%2B-31748f?style=for-the-badge&logo=rust&logoColor=white&labelColor=191724)
-![License](https://img.shields.io/badge/license-MIT-9ccfd8?style=for-the-badge&labelColor=191724)
-![Status](https://img.shields.io/badge/status-offensive%20security-c4a7e7?style=for-the-badge&labelColor=191724)
-![Warnings](https://img.shields.io/badge/warnings-0-50fa7b?style=for-the-badge&labelColor=191724)
-![Build](https://img.shields.io/badge/build-passing-f6c177?style=for-the-badge&labelColor=191724)
-
-</div>
-
-<br>
 
 ---
 
